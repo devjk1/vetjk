@@ -9,14 +9,25 @@
         <jet-validation-errors class="mb-4" />
 
         <form @submit.prevent="submit">
-            <div>
-                <jet-label for="name" value="Name" />
-                <jet-input id="name" type="text" class="mt-1 block w-full" v-model="form.name" required autofocus autocomplete="name" />
+            <div class="flex space-x-2">
+                <div>
+                    <jet-label for="first_name" value="First Name" />
+                    <jet-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus />
+                </div>
+                <div>
+                    <jet-label for="last_name" value="Last Name" />
+                    <jet-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus />
+                </div>
             </div>
 
             <div class="mt-4">
                 <jet-label for="email" value="Email" />
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required />
+            </div>
+
+            <div class="mt-4">
+                <jet-label for="phone" value="Phone Number" />
+                <jet-input id="phone" type="tel" class="mt-1 block w-full" v-model="form.phone" required />
             </div>
 
             <div class="mt-4">
@@ -81,8 +92,10 @@
         data() {
             return {
                 form: this.$inertia.form({
-                    name: '',
+                    first_name: '',
+                    last_name: '',
                     email: '',
+                    phone: '',
                     password: '',
                     password_confirmation: '',
                     terms: false,
