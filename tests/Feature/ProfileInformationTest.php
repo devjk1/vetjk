@@ -15,11 +15,15 @@ class ProfileInformationTest extends TestCase
         $this->actingAs($user = User::factory()->create());
 
         $response = $this->put('/user/profile-information', [
-            'name' => 'Test Name',
+            'first_name' => 'Test First Name',
+            'last_name' => 'Test Last Name',
             'email' => 'test@example.com',
+            'phone' => '1231231235'
         ]);
 
-        $this->assertEquals('Test Name', $user->fresh()->name);
+        $this->assertEquals('Test First Name', $user->fresh()->first_name);
+        $this->assertEquals('Test Last Name', $user->fresh()->last_name);
         $this->assertEquals('test@example.com', $user->fresh()->email);
+        $this->assertEquals('1231231235', $user->fresh()->phone);
     }
 }
