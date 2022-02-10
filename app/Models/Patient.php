@@ -15,4 +15,9 @@ class Patient extends Model
         'color',
         'dob',
     ];
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

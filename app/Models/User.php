@@ -60,4 +60,19 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function owners()
+    {
+        return $this->belongsToMany(User::class, 'owner_vet', 'vet_id', 'owner_id');
+    }
+
+    public function vets()
+    {
+        return $this->belongsToMany(User::class, 'owner_vet', 'owner_id', 'vet_id');
+    }
+
+    public function pets()
+    {
+        return $this->hasMany(Patient::class);
+    }
 }
