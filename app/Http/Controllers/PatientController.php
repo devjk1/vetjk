@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Models\Patient;
+use Inertia\Inertia;
 
 class PatientController extends Controller
 {
@@ -15,7 +16,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Patients/Index');
     }
 
     /**

@@ -71,7 +71,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'owner_vet', 'owner_id', 'vet_id');
     }
 
-    public function pets()
+    public function patients()
     {
         return $this->hasMany(Patient::class);
     }
