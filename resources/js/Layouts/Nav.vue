@@ -1,5 +1,6 @@
 <template>
     <nav class="flex items-center justify-center space-x-4">
+        <Link :href="route('users.index')">Users.Index</Link>
         <Link :href="route('patients.index')">Patients.Index</Link>
     </nav>
 </template>
