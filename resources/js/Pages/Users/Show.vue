@@ -25,6 +25,15 @@
                 <div class="">
                     {{ patient.dob }}        
                 </div>
+                <Link method="get"
+                      :href="route('patients.edit', patient.id)"
+                      as="button"
+                      class="link2 w-24 px-4 py-2 mt-4"
+                      preserve-state
+                      preserve-scroll
+                >
+                    Edit
+                </Link>
             </div>
         </template>
     </AppLayout>
@@ -33,10 +42,12 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
     components: {
         AppLayout,
+        Link,
     },
     props: {
         owner: {

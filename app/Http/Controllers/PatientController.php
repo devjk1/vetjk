@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Http\Resources\PatientResource;
@@ -64,7 +65,9 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
-        //
+        return Inertia::render('Patients/Edit', [
+            'patient' => new PatientResource($patient),
+        ]);
     }
 
     /**
@@ -74,9 +77,22 @@ class PatientController extends Controller
      * @param  \App\Models\Patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePatientRequest $request, Patient $patient)
+    public function update(PatientUpdateRequest $request, Patient $patient)
     {
-        //
+        $validated = $request->safe()->only([
+            'name',
+            'species',
+            'color',
+            'dob',
+        ]);
+
+        $patient->name = $validated['name'];
+        $patient->species = $validated['species'];
+        $patient->color = $validated['color'];
+        $patient->dob = $validated['dob'];
+        $patient->save();
+
+        return redirect(route('patients.index'));
     }
 
     /**
@@ -87,6 +103,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
-        //
+        $patient->delete();
+
+        return redirect(route('patients.index'));
     }
 }
