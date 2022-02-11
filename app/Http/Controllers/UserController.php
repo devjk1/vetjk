@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -67,7 +68,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $owner = User::find($id);
+
+        return Inertia::render('Users/Edit', [
+            'owner' => new UserResource($owner),
+        ]);
     }
 
     /**
@@ -77,9 +82,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        //
+        $validated = $request->safe()->only([
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+        ]);
+
+        $user = User::find($id);
+        $user->first_name = $validated['first_name'];
+        $user->last_name = $validated['last_name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'];
+        $user->save();
+
+        return redirect(route('users.index'));
     }
 
     /**
@@ -90,6 +109,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect(route('users.index'));
     }
 }
