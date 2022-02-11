@@ -43,7 +43,12 @@
                                 {{ user.email }}
                             </td>
                             <td class="flex items-center justify-center text-center">
-                                placeholder
+                                <Link :href="route('users.show', user.id)" class="link2 px-4 py-2">
+                                    View
+                                </Link>
+                                <Link :href="route('users.edit', user.id)" class="link2 px-4 py-2">
+                                    Edit
+                                </Link>
                             </td>
                         </tr>
                     </template>
@@ -55,11 +60,13 @@
 
 <script>
 import { defineComponent } from "vue";
+import { Link } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
+        Link,
     },
     props: {
         users: {

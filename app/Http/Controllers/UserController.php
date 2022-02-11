@@ -52,7 +52,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $owner = User::with(['patients'])->find($id);
+
+        return Inertia::render('Users/Show', [
+            'owner' => new UserResource($owner),
+        ]);
     }
 
     /**
