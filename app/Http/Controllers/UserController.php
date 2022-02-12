@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -31,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Users/Create');
     }
 
     /**
@@ -40,9 +42,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        //
+        $validated = $request->safe()->only([
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+        ]);
+
+        $owner = User::create(array_merge($validated, [
+            'password' => Hash::make('password'),
+        ]));
+
+        // Could redirect to the scaffolded Register route for registering Owners with role = 'owner'
+        // Then manually set $user->role = 'vet' (default is 'owner')
+
+        return redirect(route('users.show', $owner->id));
     }
 
     /**

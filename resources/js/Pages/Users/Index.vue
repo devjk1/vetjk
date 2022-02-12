@@ -1,6 +1,15 @@
 <template>
     <AppLayout title="Users Index">
-        <div class="flex justify-center p-4">
+        <div class="flex flex-col p-4 space-y-4">
+            <Link method="get"
+                  :href="route('users.create')"
+                  as="button"
+                  class="btn w-48 px-4 py-2"
+                  preserve-state
+                  preserve-scroll
+            >
+                Create Owner
+            </Link>
             <table class="table-auto w-full text-sm shadow-lg bg-gray-50">
                 <thead class="bg-gray-800 text-white uppercase leading-normal">
                     <tr class="">
