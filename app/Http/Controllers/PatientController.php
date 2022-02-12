@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
-use App\Http\Requests\StorePatientRequest;
 use App\Http\Requests\UpdatePatientRequest;
 use App\Http\Resources\PatientResource;
+use App\Http\Resources\UserResource;
 use App\Models\Patient;
 use App\Models\User;
 use Inertia\Inertia;
@@ -31,9 +32,11 @@ class PatientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $user)
     {
-        //
+        return Inertia::render('Patients/Create', [
+            'owner' => new UserResource($user),
+        ]);
     }
 
     /**
@@ -42,9 +45,18 @@ class PatientController extends Controller
      * @param  \App\Http\Requests\StorePatientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorePatientRequest $request)
+    public function store(PatientStoreRequest $request, User $user)
     {
-        //
+        $validated = $request->safe()->only([
+            'name',
+            'species',
+            'color',
+            'dob',
+        ]);
+
+        $patient = $user->patients()->create($validated);
+
+        return redirect(route('users.show', $user->id));
     }
 
     /**
