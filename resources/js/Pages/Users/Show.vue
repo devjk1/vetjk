@@ -10,6 +10,15 @@
             <div class="">
                 {{ owner.data.phone }}
             </div>
+            <Link method="get"
+                  :href="route('users.edit', owner.data.id)"
+                  as="button"
+                  class="link2 w-24 px-4 py-2 mt-4"
+                  preserve-state
+                  preserve-scroll
+            >
+                Edit
+            </Link>
         </div>
         <template v-for="patient in owner.data.patients" :key="patient.id">
             <div class="flex flex-col ml-16 mr-4 my-4 p-4 shadow rounded bg-orange-50">
