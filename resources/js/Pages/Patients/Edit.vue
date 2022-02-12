@@ -44,9 +44,8 @@
                 <label for="dob" class="label-input">
                     Date of Birth
                 </label>
-                <input type="text"
+                <input type="date"
                        id="dob"
-                       placeholder="YYYY-mm-dd"
                        class="input px-3 py-2"
                        v-model="form.dob"
                 />
