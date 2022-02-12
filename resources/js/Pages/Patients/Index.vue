@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Patient Index">
-        <div class="flex justify-center p-4">
+        <div class="flex flex-col p-4 space-y-4">
             <table class="table-auto w-full text-sm shadow-lg bg-gray-50">
                 <thead class="bg-gray-800 text-white uppercase leading-normal">
                     <tr class="">
@@ -59,6 +59,7 @@
                     </template>
                 </tbody>
             </table>
+            <Pagination :links="patients.links" />
         </div>
     </AppLayout>
 </template>
@@ -67,11 +68,13 @@
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/inertia-vue3";
+import Pagination from "@/Shared/Pagination.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
         Link,
+        Pagination,
     },
     props: {
         patients: {

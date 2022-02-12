@@ -63,6 +63,7 @@
                     </template>
                 </tbody>
             </table>
+            <Pagination :links="users.links" />
         </div>
     </AppLayout>
 </template>
@@ -71,11 +72,13 @@
 import { defineComponent } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import Pagination from "@/Shared/Pagination.vue";
 
 export default defineComponent({
     components: {
         AppLayout,
         Link,
+        Pagination,
     },
     props: {
         users: {
