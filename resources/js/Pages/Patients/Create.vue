@@ -1,6 +1,6 @@
 <template>
     <AppLayout title="Patient Create">
-        <form @submit.prevent="form.post(route('users.patients.store', owner.data.id), options)" class="form flex flex-col space-y-6 m-4 p-4">
+        <form @submit.prevent="form.post(route('users.patients.store', owner.data.id), options)" class="form flex flex-col max-w-7xl space-y-6 mx-auto mt-4 p-4">
             <div class="">
                 <label for="name" class="label-input">
                     Name

@@ -27226,7 +27226,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
           return _ctx.form.post(_ctx.route('users.patients.store', _ctx.owner.data.id), _ctx.options);
         }, ["prevent"])),
-        "class": "form flex flex-col space-y-6 m-4 p-4"
+        "class": "form flex flex-col max-w-7xl space-y-6 mx-auto mt-4 p-4"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "name",
