@@ -32,6 +32,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])
     ->group(function () {
-        Route::resource('patients', PatientController::class);
         Route::resource('users', UserController::class);
+        Route::resource('users.patients', PatientController::class)->except(['index'])->shallow();
+        Route::get('patients', [PatientController::class, 'index'])->name('patients.index');
     });

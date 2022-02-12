@@ -8,6 +8,9 @@
                             Name
                         </th>
                         <th class="py-3 px-6 text-left">
+                            Owner
+                        </th>
+                        <th class="py-3 px-6 text-left">
                             Species
                         </th>
                         <th class="py-3 px-6 text-left">
@@ -26,6 +29,17 @@
                         <tr class="hover:bg-gray-200">
                             <td class="py-1 px-6 text-left">
                                 {{ patient.name }}
+                            </td>
+                            <td class="py-1 px-6 text-left">
+                                <Link method="get"
+                                      :href="route('users.show', patient.owner.id)"
+                                      as="button"
+                                      class="link2 w-full"
+                                      preserve-state
+                                      preserve-scroll
+                                >
+                                    {{ patient.owner.first_name }} {{ patient.owner.last_name }}
+                                </Link>
                             </td>
                             <td class="py-1 px-6 text-left">
                                 {{ patient.species }}
@@ -50,10 +64,12 @@
 <script>
 import { defineComponent } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default defineComponent({
     components: {
         AppLayout,
+        Link,
     },
     props: {
         patients: {

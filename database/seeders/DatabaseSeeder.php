@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $users = User::factory(50)
-            ->has(Patient::factory())
+            ->has(Patient::factory()->count(2))
             ->create();
     }
 }
