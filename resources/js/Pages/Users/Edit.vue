@@ -45,7 +45,6 @@
                     Phone
                 </label>
                 <input type="tel"
-                       pattern="[0-9]{10}"
                        id="phone"
                        class="input px-3 py-2"
                        v-model="form.phone"
