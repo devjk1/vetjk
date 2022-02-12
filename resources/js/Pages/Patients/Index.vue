@@ -51,7 +51,9 @@
                                 {{ patient.dob }}
                             </td>
                             <td class="flex items-center justify-center text-center">
-                                placeholder
+                                <Link :href="route('patients.edit', patient.id)" class="link2 px-4 py-2">
+                                    Edit
+                                </Link>
                             </td>
                         </tr>
                     </template>
