@@ -18,7 +18,7 @@ class PatientPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->isVet();
     }
 
     /**
@@ -30,7 +30,7 @@ class PatientPolicy
      */
     public function view(User $user, Patient $patient)
     {
-        //
+        return $user->isVet();
     }
 
     /**
@@ -41,7 +41,7 @@ class PatientPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->isVet();
     }
 
     /**
@@ -53,7 +53,7 @@ class PatientPolicy
      */
     public function update(User $user, Patient $patient)
     {
-        //
+        return $user->isVet();
     }
 
     /**
@@ -65,7 +65,7 @@ class PatientPolicy
      */
     public function delete(User $user, Patient $patient)
     {
-        //
+        return $user->isVet();
     }
 
     /**

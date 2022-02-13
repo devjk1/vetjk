@@ -20,6 +20,8 @@ class PatientController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Patient::class);
+
         $patients = Patient::with('owner')->paginate(10);
 
         return Inertia::render('Patients/Index', [
@@ -34,6 +36,8 @@ class PatientController extends Controller
      */
     public function create(User $user)
     {
+        $this->authorize('create', [Patient::class, $user]);
+
         return Inertia::render('Patients/Create', [
             'owner' => new UserResource($user),
         ]);
@@ -47,6 +51,8 @@ class PatientController extends Controller
      */
     public function store(PatientStoreRequest $request, User $user)
     {
+        $this->authorize('create', [Patient::class, $user]);
+
         $validated = $request->safe()->only([
             'name',
             'species',
@@ -78,6 +84,8 @@ class PatientController extends Controller
      */
     public function edit(Patient $patient)
     {
+        $this->authorize('update', $patient);
+
         return Inertia::render('Patients/Edit', [
             'patient' => new PatientResource($patient),
         ]);
@@ -92,6 +100,8 @@ class PatientController extends Controller
      */
     public function update(PatientUpdateRequest $request, Patient $patient)
     {
+        $this->authorize('update', $patient);
+
         $validated = $request->safe()->only([
             'name',
             'species',
@@ -116,6 +126,8 @@ class PatientController extends Controller
      */
     public function destroy(Patient $patient)
     {
+        $this->authorize('delete', $patient);
+
         $patient->delete();
 
         return redirect(route('patients.index'));
