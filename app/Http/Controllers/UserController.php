@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,6 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
+
         $users = User::paginate(10);
 
         return Inertia::render('Users/Index', [
@@ -33,6 +36,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', User::class);
+
         return Inertia::render('Users/Create');
     }
 
@@ -44,6 +49,8 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
+        $this->authorize('create', User::class);
+
         $validated = $request->safe()->only([
             'first_name',
             'last_name',
@@ -69,6 +76,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('view', User::find($id));
+
         $owner = User::with(['patients'])->find($id);
 
         return Inertia::render('Users/Show', [
@@ -84,6 +93,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', User::find($id));
+
         $owner = User::find($id);
 
         return Inertia::render('Users/Edit', [
@@ -100,6 +111,10 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
+        $this->authorize('update', User::find($id));
+
+        $owner = User::find($id);
+
         $validated = $request->safe()->only([
             'first_name',
             'last_name',
@@ -107,12 +122,11 @@ class UserController extends Controller
             'phone',
         ]);
 
-        $user = User::find($id);
-        $user->first_name = $validated['first_name'];
-        $user->last_name = $validated['last_name'];
-        $user->email = $validated['email'];
-        $user->phone = $validated['phone'];
-        $user->save();
+        $owner->first_name = $validated['first_name'];
+        $owner->last_name = $validated['last_name'];
+        $owner->email = $validated['email'];
+        $owner->phone = $validated['phone'];
+        $owner->save();
 
         return redirect(route('users.index'));
     }
@@ -125,9 +139,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $this->authorize('delete', User::find($id));
 
-        $user->delete();
+        $owner = User::find($id);
+
+        $owner->delete();
 
         return redirect(route('users.index'));
     }

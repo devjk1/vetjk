@@ -76,4 +76,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Patient::class);
     }
+
+    public function isVet()
+    {
+        return $this->role === 'vet';
+    }
+
+    public function isOwner()
+    {
+        return $this->role === 'owner' || $this->role === 'vet';
+    }
 }
