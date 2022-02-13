@@ -3,19 +3,23 @@
 use App\Models\User;
 
 test('vet can access users index page', function () {
-    $user = User::factory(['role' => 'vet'])->create();
-    $this->actingAs($user);
+    $vet = User::factory(['role' => 'vet'])->create();
+    $this->actingAs($vet);
 
-    $response = $this->get('/users');
+    $this->assertTrue($vet->can('viewAny', User::class));
+
+    $response = $this->get(route('users.index'));
 
     $response->assertStatus(200);
 });
 
 test('owner cannot access users index page', function () {
-    $user = User::factory(['role' => 'owner'])->create();
-    $this->actingAs($user);
+    $owner = User::factory(['role' => 'owner'])->create();
+    $this->actingAs($owner);
 
-    $response = $this->get('/users');
+    $this->assertFalse($owner->can('viewAny', User::class));
+
+    $response = $this->get(route('users.index'));
 
     $response->assertStatus(403);
 });

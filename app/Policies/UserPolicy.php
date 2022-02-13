@@ -29,7 +29,7 @@ class UserPolicy
      */
     public function view(User $user, User $model)
     {
-        return $user->isVet();
+        return $user->isVet() && $user->id === $model->id || $user->isVet() && $model->role === 'owner';
     }
 
     /**
@@ -52,7 +52,7 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        return $user->isVet();
+        return $user->isVet() && $user->id === $model->id || $user->isVet() && $model->role === 'owner';
     }
 
     /**

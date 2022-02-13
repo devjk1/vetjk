@@ -3,19 +3,23 @@
 use App\Models\User;
 
 test('vet can access users create page', function () {
-    $user = User::factory(['role' => 'vet'])->create();
-    $this->actingAs($user);
+    $vet = User::factory(['role' => 'vet'])->create();
+    $this->actingAs($vet);
 
-    $response = $this->get('/users/create');
+    $this->assertTrue($vet->can('create', User::class));
+
+    $response = $this->get(route('users.create'));
 
     $response->assertStatus(200);
 });
 
 test('owner cannot access users create page', function () {
-    $user = User::factory(['role' => 'owner'])->create();
-    $this->actingAs($user);
+    $owner = User::factory(['role' => 'owner'])->create();
+    $this->actingAs($owner);
 
-    $response = $this->get('/users/create');
+    $this->assertFalse($owner->can('create', User::class));
+
+    $response = $this->get(route('users.create'));
 
     $response->assertStatus(403);
 });
