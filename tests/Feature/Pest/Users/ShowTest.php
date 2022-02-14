@@ -26,17 +26,17 @@ test('vet can access his own users show page', function () {
     $response->assertStatus(200);
 });
 
-test('vet cannot access other vets users show page', function () {
+test('vet can access other vets users show page', function () {
     $vet = User::factory(['role' => 'vet'])->create();
     $this->actingAs($vet);
 
     $otherVet = User::factory(['role' => 'vet'])->create();
 
-    $this->assertFalse($vet->can('view', $otherVet));
+    $this->assertTrue($vet->can('view', $otherVet));
 
     $response = $this->get(route('users.show', $otherVet->id));
 
-    $response->assertStatus(403);
+    $response->assertStatus(200);
 });
 
 test('owner cannot access a vets users show page', function () {

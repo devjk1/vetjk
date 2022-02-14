@@ -8,9 +8,7 @@ test('vet can update his own user on users update', function () {
 
     $this->assertTrue($vet->can('update', $vet));
 
-    $this->assertDatabaseHas('users', [
-        'email' => $vet->email,
-    ]);
+    $this->assertModelExists($vet);
 
     $response = $this->put(route('users.update', $vet), [
         'email' => 'newEmail@example.com',
@@ -39,9 +37,7 @@ test('vet can update owners on users update', function () {
 
     $this->assertTrue($vet->can('update', $owner));
 
-    $this->assertDatabaseHas('users', [
-        'email' => $owner->email,
-    ]);
+    $this->assertModelExists($owner);
 
     $response = $this->put(route('users.update', $owner), [
         'email' => 'newEmailForOwner@example.com',
@@ -62,7 +58,7 @@ test('vet can update owners on users update', function () {
     $response->assertStatus(302);
 });
 
-test('vet cannot update other owners on users update', function () {
+test('vet cannot update other vets on users update', function () {
     $vet = User::factory(['role' => 'vet'])->create();
     $this->actingAs($vet);
 
@@ -70,9 +66,7 @@ test('vet cannot update other owners on users update', function () {
 
     $this->assertFalse($vet->can('update', $otherVet));
 
-    $this->assertDatabaseHas('users', [
-        'email' => $otherVet->email,
-    ]);
+    $this->assertModelExists($otherVet);
 
     $response = $this->put(route('users.update', $otherVet), [
         'email' => 'newEmailForOtherVet@example.com',
